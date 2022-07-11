@@ -109,6 +109,11 @@
                     template="Magento_Theme::html/footer/copyright.phtml"
                     as="copyright"
                 />
+                <block class="Magento\Cms\Block\Block" name="Block5">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">Block5</argument>
+                    </arguments>
+                </block>
 
             </block>
         </referenceContainer>
@@ -120,17 +125,4 @@
         <block class="Magento\Framework\View\Element\Template" name="head.additional" as="head.additional" template="Magento_Theme::html/container.phtml"/>
     </body>
 </page>
-
-<!--<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">-->
-<!--    <body>-->
-<!--        <referenceBlock name="logo">-->
-<!--            <arguments>-->
-<!--                <argument name="logo_file" xsi:type="string">images/bss-logo.png</argument>-->
-<!--                <argument name="logo_width" xsi:type="number">100</argument>-->
-<!--                <argument name="logo_height" xsi:type="number">100</argument>-->
-<!--                <argument name="logo_alt" xsi:type="string"></argument>-->
-<!--            </arguments>-->
-<!--        </referenceBlock>-->
-<!--    </body>-->
-<!--</page>-->
 
