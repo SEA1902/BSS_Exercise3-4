@@ -15,10 +15,59 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 ?>
 <div class="text-gray-700 body-font bg-container-darker border-t border-container-darker shadow pb-16">
+<!--    <div class="flex bg-gray-200 w-full grid grid-cols-3 p-2">-->
+<!--        <div class="flex">-->
+<!--            <img class="h-8 w-8 bg-gray-200" src="https://icon-library.com/images/money-icon-png/money-icon-png-18.jpg">-->
+<!--            <label class="text-xl">100% Money back guarantee</label>-->
+<!--        </div>-->
+<!--        <div class="flex">-->
+<!--            <img class="h-8 w-8 bg-gray-200" src="https://e7.pngegg.com/pngimages/90/741/png-clipart-female-computer-icons-gender-symbol-people-icon-miscellaneous-text.png">-->
+<!--            <label class="text-xl">Discount for awesome people!</label>-->
+<!--        </div>-->
+<!--        <img class="h-10" src="https://library.kissclipart.com/20181007/sce/kissclipart-paypal-visa-mastercard-american-express-discover-c-dc202c06b5ad0879.png">-->
+<!--    </div>-->
     <div class="container py-8 mx-auto">
-        <div class="flex flex-wrap order-first gap-y-16">
+        <div class="flex order-first gap-y-16">
             <?php foreach ($block->getChildNames() as $childName): ?>
-                <?= $childName !== 'footer-copyright' ? $block->getBlockHtml($childName) : '' ?>
+                <?= $childName == 'Block1' ? $block->getBlockHtml($childName) : '' ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="flex order-first gap-y-16">
+<!--            <div class="flex grid grid-cols-4">-->
+<!--                <div class="m-2 text-sm text-zinc-400 ">-->
+<!--                    <label class="block text-xl text-black font-semibold border-b-2 border-black-300">Shop</label>-->
+<!--                    <span class="block">Smartphones</span>-->
+<!--                    <span class="block">Men</span>-->
+<!--                    <span class="block">Children</span>-->
+<!--                    <span class="block">Accessories</span>-->
+<!--                    <span class="block">Other</span>-->
+<!--                </div>-->
+<!--                <div class="m-2 text-sm text-zinc-400 ">-->
+<!--                    <label class="block text-xl text-black font-semibold border-b-2 border-black-300">Policies</label>-->
+<!--                    <span class="block">Terms of service</span>-->
+<!--                    <span class="block">Privacy</span>-->
+<!--                    <span class="block">Security</span>-->
+<!--                    <span class="block">Terms of use</span>-->
+<!--                </div>-->
+<!--                <div class="m-2 text-sm text-zinc-400 ">-->
+<!--                    <label class="block text-xl text-black font-semibold border-b-2 border-black-300">Customer service</label>-->
+<!--                    <span class="block">Contact us</span>-->
+<!--                    <span class="block">Feedback</span>-->
+<!--                    <span class="block">Return policy</span>-->
+<!--                    <span class="block">Shipping & Tax</span>-->
+<!--                    <span class="block">International</span>-->
+<!--                </div>-->
+<!--                <div class="m-2 text-sm text-zinc-400 ">-->
+<!--                    <label class="block text-xl text-black font-semibold border-b-2 border-black-300">Connect with us</label>-->
+<!--                    <span class="block">Twitter</span>-->
+<!--                    <span class="block">Facebook</span>-->
+<!--                    <span class="block">Email</span>-->
+<!--                    <span class="block">Google</span>-->
+<!--                    <span class="block">Pin it</span>-->
+<!--                </div>-->
+<!--            </div>-->
+            <?php foreach ($block->getChildNames() as $childName): ?>
+                <?= $childName !== 'footer-copyright' && $childName !== 'Block1' ? $block->getBlockHtml($childName) : '' ?>
             <?php endforeach; ?>
         </div>
     </div>
