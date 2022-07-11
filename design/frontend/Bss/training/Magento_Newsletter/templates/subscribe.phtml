@@ -37,22 +37,19 @@ $recaptcha = $block->getData('viewModelRecaptcha');
         <p class="m-2 text-sm text-zinc-400">
             Laos, alongside many of its Southeast Asian neighbours, is well known for producing counterfeit goods of all types, and with the
         </p>
-        <div class="flex ">
-            <label for="newsletter-subscribe" class="sr-only">
-                <?= $escaper->escapeHtml(__('Email Address')) ?>
-            </label>
-            <div class="" >
-                abc
+        <div class="flex">
+            <div class="w-1/6" >
+                <img class="h-8" src="https://image.shutterstock.com/image-vector/email-icon-vector-envelope-mail-260nw-1670776732.jpg" alt="">
             </div>
             <input name="email"
                    type="email"
                    required
                    id="newsletter-subscribe"
-                   class="w-full"
+                   class="block w-1/2"
             >
             <?= $block->getBlockHtml('formkey') ?>
             <?= $recaptcha ? $recaptcha->getInputHtml('newsletter') : '' ?>
-            <button class="bg-pink-400 text-white">
+            <button class="bg-pink-400 text-white p-2 col-start-7 w-1/3">
                 <?= $escaper->escapeHtml(__('Subscribe')) ?>
             </button>
         </div>

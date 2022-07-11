@@ -84,7 +84,7 @@
 
         <referenceContainer name="footer">
             <block name="footer-content" template="Magento_Theme::html/footer.phtml">
-<!--                <block name="footer-static-links" template="Magento_Theme::html/footer/links.phtml"/>-->
+
                 <block class="Magento\Cms\Block\Block" name="Block1">
                     <arguments>
                         <argument name="block_id" xsi:type="string">Block1</argument>
@@ -109,11 +109,7 @@
                     template="Magento_Theme::html/footer/copyright.phtml"
                     as="copyright"
                 />
-<!--                <block name="footer_links_block">-->
-<!--                    <arguments>-->
-<!--                        <argument name="block_id" xsi:type="string">footer_links_block</argument>-->
-<!--                    </arguments>-->
-<!--                </block>-->
+
             </block>
         </referenceContainer>
 
