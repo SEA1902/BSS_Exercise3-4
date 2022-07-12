@@ -17,6 +17,8 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 /** @var Template $block */
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
@@ -34,31 +36,41 @@ $product = $productViewModel->getProduct();
         <?= $escaper->escapeHtml($product->getName()) ?>
     </h1>
 
-    <div class="my-2 cursor-pointer"
+    <div class="my-2 cursor-pointer flex"
          onclick="(
               document.getElementById('customer-review-list') ||
               document.getElementById('customer-reviews')).scrollIntoView({behavior: 'smooth'}
               )">
         <?= $block->getChildHtml('product.info.review') ?>
+        <div class="ml-4 font-semibold text-black">
+            <a class="" href="#review-form">ADD A REVIEW</a>
+        </div>
+
     </div>
 
     <div>
         <?= $block->getChildHtml("product.info.price") ?>
     </div>
-    <div class="flex flex-col sm:flex-row justify-between my-4">
+    <?php if ($tierPriceBlock = $block->getChildHtml("product.price.tier")): ?>
+        <div class="py-4 my-2 tier-price-container">
+            <?= /** @noEscape */ $tierPriceBlock ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="flex flex-col sm:flex-row justify-between pt-4">
         <?= $block->getChildHtml("product.info.stockstatus") ?>
         <?= $block->getChildHtml("alert.urls") ?>
     </div>
-    <div id="product-details">
+    <div id="product-details" class="pb-4">
         <?php foreach ($block->getAttributes() as $attributeConfig) {
             $attribute = $attributesViewModel->getAttributeFromLayoutConfig($attributeConfig); ?>
             <?php if ($value = $attribute['value'] ?? null) { ?>
-                <div class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b <?=/* @noEscape */
+                <div class="flex" <?=/* @noEscape */
                 $attribute['value'] ?: "" ?>">
-                    <span class="w-1/2 text-left text-gray-700 product-detail-label">
-                        <?= $escaper->escapeHtml($attribute['label']) ?>
+                    <span class="font-semibold product-detail-label">
+                        <?= $escaper->escapeHtml($attribute['label']) ?>:
                     </span>
-                    <span class="w-1/2 ml-2 text-left text-gray-900 product-detail-value">
+                    <span class="ml-2 text-green-500 product-detail-value">
                         <?= $escaper->escapeHtml($value) ?>
                     </span>
                 </div>
@@ -71,14 +83,29 @@ $product = $productViewModel->getProduct();
 
     <?= $block->getChildHtml('product.info.form') ?>
 
-    <div class="flex flex-col sm:flex-row items-end my-4">
-        <div class="mt-4 ml-auto sm:mt-0">
+    <div class="my-4">
+        <div class="mb-4">
+            <label class="font-semibold pb-3">QTY:</label>
             <?php if ($product->isSaleable()): ?>
                 <?= $block->getChildHtml("product.info.quantity") ?>
-                <?= $block->getChildHtml("product.info.addtocart") ?>
             <?php endif; ?>
         </div>
+        <div class="mb-4 md:flex">
+            <?php if ($product->isSaleable()): ?>
+                <?= $block->getChildHtml("product.info.addtocart") ?>
+            <?php endif; ?>
 
+            <button type="submit"
+                    form="product_contactforsaleprice_form"
+                    title="<?= $escaper->escapeHtmlAttr(__('Contact for sale price')) ?>"
+                    class="btn bg-black ml-4"
+                    id="product-contactforsaleprice-button"
+            >
+                <span class="hidden sm:block md:hidden lg:block">
+                    Contact for sale price
+                </span>
+            </button>
+        </div>
     </div>
 
     <?php if ($product->isSaleable()): ?>
@@ -88,17 +115,18 @@ $product = $productViewModel->getProduct();
     <?php endif; ?>
 
     <div class="flex mt-4 justify-end">
-        <?= $block->getChildHtml('product.info.addtowishlist'); ?>
         <?= $block->getChildHtml('product.info.addtocompare'); ?>
+        <?= $block->getChildHtml('product.info.addtowishlist'); ?>
         <?= $block->getChildHtml('product.info.emailtofriend'); ?>
         <?= $block->getChildHtml('product.info.additional.actions'); ?>
     </div>
-
-    <?php if ($tierPriceBlock = $block->getChildHtml("product.price.tier")): ?>
-        <div class="py-4 my-2 tier-price-container">
-            <?= /** @noEscape */ $tierPriceBlock ?>
-        </div>
-    <?php endif; ?>
+    <div class="flex">
+        <span class="font-semibold my-6 mr-3">SHARE THIS</span>
+        <button class="p-2 px-3"><img class="h-8 w-12" src="http://sieuthivp.com//userdata/news/1383796950484.jpg"></button>
+        <button class="p-2 px-3"><img class="h-8 w-12" src="https://champcloud.com/wp-content/uploads/2020/03/FBshares.jpg"></button>
+        <button class="p-2 px-3"><img class="h-8 w-12" src="https://i.stack.imgur.com/0MW3U.png"></button>
+        <button class="p-2 px-3"><img class="h-8 w-12" src="https://www.santiagobarrionuevo.com/wp-content/uploads/2014/05/pin-it.jpg"></button>
+    </div>
 
     <?= $block->getChildHtml("product.info.additional") ?>
 </div>
