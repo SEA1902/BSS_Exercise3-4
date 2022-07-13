@@ -1,0 +1,15 @@
+#Item Module
+type Query
+{
+    ItemGraphql (
+        id: Int! @doc(description: "Specify the id of the item.")
+
+    ): ItemOutput @resolver(class: "Bss\\WebApi\\Model\\Resolver\\ItemGraphql") @doc(description:"Get data for the given item id.")
+}
+
+type ItemOutput
+{
+    id: String
+    name: String
+    class: String
+}

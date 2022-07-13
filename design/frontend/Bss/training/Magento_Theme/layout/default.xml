@@ -36,7 +36,7 @@
                     <argument name="label" translate="true" xsi:type="string">Skip to Content</argument>
                 </arguments>
             </block>
-            <block name="header-content" template="Magento_Theme::html/header.phtml">
+            <referenceBlock name="header-content" template="Magento_Theme::html/header.phtml">
                 <block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
                     <referenceBlock name="logo">
                         <arguments>
@@ -70,7 +70,7 @@
                            template="Magento_Theme::html/header/menu/desktop.phtml"
                     ></block>
                 </block>
-            </block>
+            </referenceBlock>
         </referenceContainer>
 
         <referenceContainer name="top.container">

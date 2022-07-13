@@ -29,9 +29,12 @@ $productViewModel = $viewModels->require(ProductPage::class);
 $attributesViewModel = $viewModels->require(ProductAttributes::class);
 /** @var Product $product */
 $product = $productViewModel->getProduct();
-
 ?>
+
 <div class="order-2 w-full mb-6 md:w-7/12 md:pl-5 lg:pl-10 md:py-6 lg:w-1/2 md:mb-0">
+    <div>
+        <?= $block->getChildHtml("product.info.backto") ?>
+    </div>
     <h1 class="text-xl mt-4 mb-3 md:text-3xl font-semibold md:font-bold text-gray-900 title-font">
         <?= $escaper->escapeHtml($product->getName()) ?>
     </h1>
@@ -52,7 +55,7 @@ $product = $productViewModel->getProduct();
         <?= $block->getChildHtml("product.info.price") ?>
     </div>
     <?php if ($tierPriceBlock = $block->getChildHtml("product.price.tier")): ?>
-        <div class="py-4 my-2 tier-price-container">
+        <div class="py-4 my-2 tier-price-container text-sky-500">
             <?= /** @noEscape */ $tierPriceBlock ?>
         </div>
     <?php endif; ?>
@@ -70,7 +73,7 @@ $product = $productViewModel->getProduct();
                     <span class="font-semibold product-detail-label">
                         <?= $escaper->escapeHtml($attribute['label']) ?>:
                     </span>
-                    <span class="ml-2 text-green-500 product-detail-value">
+                    <span class="ml-2 text-sky-500 product-detail-value">
                         <?= $escaper->escapeHtml($value) ?>
                     </span>
                 </div>
@@ -120,7 +123,7 @@ $product = $productViewModel->getProduct();
         <?= $block->getChildHtml('product.info.emailtofriend'); ?>
         <?= $block->getChildHtml('product.info.additional.actions'); ?>
     </div>
-    <div class="flex">
+    <div class="flex border-x-2 border-gray-300">
         <span class="font-semibold my-6 mr-3">SHARE THIS</span>
         <button class="p-2 px-3"><img class="h-8 w-12" src="http://sieuthivp.com//userdata/news/1383796950484.jpg"></button>
         <button class="p-2 px-3"><img class="h-8 w-12" src="https://champcloud.com/wp-content/uploads/2020/03/FBshares.jpg"></button>
