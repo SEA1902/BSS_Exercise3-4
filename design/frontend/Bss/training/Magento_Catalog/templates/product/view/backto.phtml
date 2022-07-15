@@ -1,8 +1,15 @@
 <?php
-$url = $_SERVER['PHP_SELF'];
-
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');
+$categories = $product->getCategoryIds();
+foreach($categories as $category){
+    $cat = $objectManager->create('Magento\Catalog\Model\Category')->load($category);
+    $category_name = $cat->getName();
+    $category_url = $cat->getUrl();
+    break;
+}
 ?>
 <div>
     <span>Back to</span>
-    <a href="<?php $url ?>" class="text-blue-900">Woman</a>
+    <a href="<?php echo $category_url; ?>" class="text-blue-900"><?php echo $category_name; ?> </a>
 </div>

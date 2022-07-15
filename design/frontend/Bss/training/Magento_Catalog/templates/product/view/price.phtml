@@ -185,7 +185,7 @@ $displayTax = $productPriceViewModel->displayPriceIncludingTax();
 
             <div class="final-price inline-block" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
                 <span id="product-price-<?= (int)$product->getId() ?>"
-                      class="price-wrapper title-font font-medium text-2xl text-sky-500">
+                      class="price-wrapper title-font font-medium text-2xl product-detail-color">
                     <span class="price" x-html="getFormattedFinalPrice()">
                         <?= /** @noEscape */ $productViewModel->format($finalPrice) ?>
                     </span>

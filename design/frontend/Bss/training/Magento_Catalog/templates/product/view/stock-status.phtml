@@ -33,7 +33,7 @@ if (!$product->getId()) {
         <p class="flex items-center justify-end align-middle available gap-x-2 stock"
            title="<?= $escaper->escapeHtmlAttr(__('Availability')) ?>">
             <span class="font-semibold">Availability:</span>
-            <span class="text-sky-500"><?= $escaper->escapeHtml(__('In stock')) ?></span>
+            <span class="product-detail-color"><?= $escaper->escapeHtml(__('In stock')) ?></span>
         </p>
     <?php else: ?>
         <p class="flex items-center justify-end align-middle gap-x-2 unavailable stock"

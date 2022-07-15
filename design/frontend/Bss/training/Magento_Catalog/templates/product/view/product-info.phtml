@@ -29,6 +29,7 @@ $productViewModel = $viewModels->require(ProductPage::class);
 $attributesViewModel = $viewModels->require(ProductAttributes::class);
 /** @var Product $product */
 $product = $productViewModel->getProduct();
+
 ?>
 
 <div class="order-2 w-full mb-6 md:w-7/12 md:pl-5 lg:pl-10 md:py-6 lg:w-1/2 md:mb-0">
@@ -45,8 +46,9 @@ $product = $productViewModel->getProduct();
               document.getElementById('customer-reviews')).scrollIntoView({behavior: 'smooth'}
               )">
         <?= $block->getChildHtml('product.info.review') ?>
-        <div class="ml-4 font-semibold text-black">
-            <a class="" href="#review-form">ADD A REVIEW</a>
+        <div class="flex ml-4 text-black">
+            <?= $block->getChildHtml("product.info.totalreview") ?>
+            <a class="font-semibold pl-1" href="#review-form">ADD A REVIEW</a>
         </div>
 
     </div>
@@ -73,7 +75,7 @@ $product = $productViewModel->getProduct();
                     <span class="font-semibold product-detail-label">
                         <?= $escaper->escapeHtml($attribute['label']) ?>:
                     </span>
-                    <span class="ml-2 text-sky-500 product-detail-value">
+                    <span class="ml-2 product-detail-color product-detail-value">
                         <?= $escaper->escapeHtml($value) ?>
                     </span>
                 </div>

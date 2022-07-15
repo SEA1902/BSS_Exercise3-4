@@ -1,0 +1,24 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$productId = $objectManager->get('Magento\Framework\Registry')->registry('current_product')->getId();
+
+$reviewFactory = $objectManager->create('Magento\Review\Model\Review');
+$product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+$storeManager  = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
+$storeId = $storeManager->getStore()->getStoreId();
+$reviewFactory->getEntitySummary($product, $storeId);
+
+$reviewCount = $product->getRatingSummary()->getReviewsCount();
+?>
+<div class="pr-1 border-r-2 border-gray-300">
+    <?php
+    if ($reviewCount == 0){
+        echo "0 Review";
+    }elseif($reviewCount == 1 ){
+        echo $reviewCount." Review";
+    }else{
+        echo $reviewCount." Review(s)";
+    }
+    ?>
+</div>
+

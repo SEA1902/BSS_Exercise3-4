@@ -105,6 +105,7 @@
 
                         <block name="product.info.stockstatus"  template="Magento_Catalog::product/view/stock-status.phtml"/>
                         <block name="product.info.backto"  template="Magento_Catalog::product/view/backto.phtml"/>
+                        <block name="product.info.totalreview"  template="Magento_Catalog::product/view/totalreview.phtml"/>
 
                         <block class="Magento\Catalog\Block\Product\Price"
                                name="product.info.price"
@@ -213,6 +214,7 @@
                     <argument name="page_size" xsi:type="string">4</argument>
                 </arguments>
             </block>
+
         </referenceContainer>
 
         <move element="alert.urls" destination="product.info" as="alert.urls"/>
