@@ -58,6 +58,10 @@ $customerRegistration = $viewModels->require(CustomerRegistration::class);
             >
                 <?= $escaper->escapeHtml(__('Address Book')); ?></a>
             <a class="block px-4 py-2 lg:px-5 lg:py-2 hover:bg-gray-100"
+               href="<?= $escaper->escapeUrl($block->getUrl('bss/training/posts')) ?>"
+            >
+                <?= $escaper->escapeHtml(__('Bss Training Posts')); ?></a>
+            <a class="block px-4 py-2 lg:px-5 lg:py-2 hover:bg-gray-100"
                href="<?= $escaper->escapeUrl($block->getUrl('customer/account/logout')) ?>"
             >
                 <?= $escaper->escapeHtml(__('Sign Out')); ?>

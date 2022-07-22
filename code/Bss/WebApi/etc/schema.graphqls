@@ -13,3 +13,13 @@ type ItemOutput
     name: String
     class: String
 }
+type Query {
+    BssPost(
+     post_id: Int! @doc(description: "id of the post")
+    ): GetBssPost @resolver(class:"Bss\\WebApi\\Model\\Resolver\\BssPostsGraphql") @doc(description:"Get data for the given post id.") @cache(cacheable: false)
+}
+type GetBssPost {
+    post_id: Int
+    title: String
+    content: String
+}

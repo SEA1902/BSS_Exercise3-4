@@ -15,7 +15,7 @@
             <block name="product.info.backto"  template="Magento_Catalog::product/view/backto.phtml"/>
             <block name="product.info.totalreview"  template="Magento_Catalog::product/view/totalreview.phtml"/>
         </referenceBlock>
-            <!--            bss-->
+            <!--bss-->
         <referenceBlock name="product.detail.page">
             <block name="bss" template="Magento_Catalog::product/slider/product-slider.phtml">
                 <arguments>

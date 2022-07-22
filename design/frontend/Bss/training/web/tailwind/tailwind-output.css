@@ -2459,6 +2459,9 @@ a.pagebuilder-button-secondary:focus, button.pagebuilder-button-secondary:focus,
 [data-show-dots='false'] .glider-dots {
 	display: none;
 }
+.product-detail-color{
+    color:rgb(4, 109, 158)
+}
 /* purgecss end ignore */
 .sr-only {
 	position: absolute;

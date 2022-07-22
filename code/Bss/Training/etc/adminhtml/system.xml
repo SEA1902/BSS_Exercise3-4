@@ -1,0 +1,23 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="general" type="text">
+            <group id="discount_price_per_customer_group" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Discount price per customer group</label>
+                <field id="discount_amount" translate="label" sortOrder="99" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Discount price per customer group</label>
+                    <frontend_model>Bss\Training\Block\Adminhtml\Form\Field\DiscountAmount</frontend_model>
+                    <backend_model>Bss\Training\Model\DiscountAmount</backend_model>
+                </field>
+            </group>
+
+            <group id="earn_point_rate" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Earn Point Rate</label>
+                <field id="rate" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Earn Point Rate</label>
+                    <comment>This is rate of reward points for customers</comment>
+                </field>
+            </group>
+        </section>
+
+    </system>
+</config>

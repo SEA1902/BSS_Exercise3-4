@@ -1,0 +1,17 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+            <table name="bss_customer_posts">
+            <column xsi:type="int" name="post_id" unsigned="true" nullable="false" comment="Post Id"/>
+            <constraint xsi:type="primary" referenceId="PRIMARY">
+                <column name="post_id"/>
+            </constraint>
+            <column xsi:type="varchar" name="title" nullable="false" comment="title" length="255"/>
+            <column xsi:type="text" name="content" nullable="true" comment="content"/>
+            <column xsi:type="datetime" name="created_at" nullable="false" comment="time create"/>
+            <column xsi:type="datetime" name="updated_at" nullable="false" comment="time update"/>
+            <column xsi:type="int" name="customer_id"  padding="6" unsigned="true" nullable="true" identity="false" comment="Customer ID"/>
+            <constraint xsi:type="foreign" referenceId="BSS_CSTR_POSTS_CSTR_ID_CSTR_ENTT_ENTT_ID"
+                        table="bss_customer_posts" column="customer_id" referenceTable="customer_entity"
+                        referenceColumn="entity_id" onDelete="CASCADE"/>
+            </table>
+</schema>
