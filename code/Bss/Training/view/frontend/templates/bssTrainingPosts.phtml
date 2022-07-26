@@ -1,45 +1,228 @@
 <?php
 
 /**
- * @var \Bss\Training\Block\AddPost $block
+ * @var \Bss\Training\Block\Posts $block
  * @var \Magento\Framework\Escaper $escaper
  */
 
 ?>
-<div x-data="addPost()">
-    <button @click="open = true" class="py-2 px-4 rounded text-white bg-primary">Add A Post</button>
-    <div x-show="open" class="bg-gray-100 min-h-screen align-center min-w-screen p-8">
-        <form @submit.prevent="submitPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
-            <div class="px-4 py-2">
-                <span class="block font-semibold pb-1">Post ID:</span>
-                <input type="text" class="p-2 w-full">
+<div class="flex">
+    <div  class="w-40  border-r-2">
+        <div x-data="addPost()">
+            <button @click="open = true" class="py-2 px-4 rounded text-white bg-primary">Add A Post</button>
+            <div x-show="open" class="fixed w-screen h-screen top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
+                <form @submit.prevent="submitPost(1)" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
+                    <div class="px-4 py-2">
+                        <span class="block font-semibold pb-1">Post ID:</span>
+                        <input type="text" x-model="formData.post_id" class="p-2 w-full">
+                    </div>
+                    <div class="px-4 py-2">
+                        <span class="block font-semibold pb-1">Title:</span>
+                        <input type="text" x-model="formData.title" class="p-2 w-full">
+                    </div>
+                    <div class="px-4 py-2">
+                        <span class="block font-semibold pb-1">Content:</span>
+                        <textarea class="p-2 w-full" x-model="formData.content"></textarea>
+                    </div>
+                    <div class="flex px-4 py-2 justify-evenly">
+                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Add Post</button>
+                        <button class="py-2 px-4 rounded text-white bg-red-500" @click="open =false">Cancel</button>
+                    </div>
+                </form>
             </div>
-            <div class="px-4 py-2">
-                <span class="block font-semibold pb-1">Title:</span>
-                <input type="text"  class="p-2 w-full">
-            </div>
-            <div class="px-4 py-2">
-                <span class="block font-semibold pb-1">Content:</span>
-                <textarea class="p-2 w-full"></textarea>
-            </div>
-            <div class="flex px-4 py-2 justify-around">
-                <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Add Post</button>
-                <button class="py-2 px-4 rounded text-white bg-red-500" @click="open =false">Cancel</button>
-            </div>
-        </form>
+        </div>
     </div>
+
+<div x-data="getData()" data-reflect-root="" class="w-full p-8">
+    <form @submit.prevent="fetchData()" class="bg-white flex align-center justify-evenly border-b-2 pb-2">
+        <div class="field w-3/4">
+            <div class="control flex">
+                <input class="input w-3/4" type="text" placeholder="Event" x-model="searchValue">
+                <button type="submit" class="button px-8 py-1 bg-black text-white rounded-md"">
+                    Search
+                </button>
+            </div>
+        </div>
+        <div class="field flex align-center">
+            <label class="label p-1 font-semibold ">Show</label>
+            <div class="control">
+                <div class="select">
+                    <select x-model="selectedOption" class="cursor-pointer rounded-md">
+                        <template x-for="option in options" :key="option.value">
+                            <option :key="option.value" :value="option.value" x-text="option.text"></option>
+                        </template>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <template x-if="!posts">
+        <tr><td colspan="4"><i>Loading...</i></td></tr>
+    </template>
+    <template x-if="posts">
+        <table class="w-full">
+            <thead>
+            <tr class="border-b-2">
+                <th class="p-4">Post ID</th>
+                <th class="p-4">Title</th>
+                <th class="p-4">Content</th>
+                <th class="p-4">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="post in posts" :key="post.post_id">
+                <tr class="border-b-2">
+                    <th class="p-4 font-medium" x-text="post.post_id"></th>
+                    <th class="p-4 font-medium" x-text="post.title"></th>
+                    <th class="p-4 font-medium" x-text="post.content"></th>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+
+        <br />
+
+        </nav>
+    </template>
 </div>
+</div>
+<script type="text/javascript">
+    function getData() {
+        return {
+            selectedOption: "",
+            options: [{
+                value: "5",
+                text: "5"
+            },
+                {
+                    value: "10",
+                    text: "10"
+                },
+                {
+                    value: "15",
+                    text: "15"
+                },
+            ],
+            searchValue: '',
+            page: 1,
+            limit: 10,
+            total: 50,
+            posts: [
+                {
+                    "post_id": "1",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "2",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "3",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "4",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "5",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "6",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "7",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "8",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "9",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "10",
+                    "title": "bss",
+                    "content": "bss post"
+                },
+                {
+                    "post_id": "11",
+                    "title": "bss",
+                    "content": "bss post"
+                }
+
+            ],
+            isLoading: false,
+            previousPage: 1,
+            nextPage: null,
+            lastPage: 0,
+            fetchData(page = this.page) {
+                this.page = page
+                this.isLoading = true;
+                fetch(`https://5d6516c05b26ae001489eb85.mockapi.io/api/v1/events?search=${this.searchValue}&page=${this.page}&limit=${this.limit}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        this.isLoading = false;
+                        this.posts = data;
+                        this.previousPage = this.page == 1 ? this.previousPage : this.page - 1
+                        this.nextPage = this.page + 1
+                        this.lastPage = Math.floor(this.total / this.limit)
+                    });
+            },
+        };
+    }
+</script>
 
 <script>
-    const addPostUrl = '<?= $escaper->escapeUrl($block->getUrl('bss/training/addpost/')) ?>';
+    //const addPostUrl = '<?//= $escaper->escapeUrl($block->getUrl('bss/training/post/')) ?>//';
     function addPost() {
         return {
             open: false,
-            submitPost: function () {
-                fetch(addPostUrl + '?foo=1', {
-                    method: "GET"
+            formData: {
+                post_id:"",
+                title:"",
+                content:"",
+            },
+            submitPost(someId) {
+                fetch(BASE_URL, {
+                    headers: {
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    },
+                    body: new URLSearchParams({
+                        someId: someId
+                    }),
+                    method: "POST",
+                    mode: "cors",
+                    credentials: "include",
                 })
+                    .then(response => response.json())
             }
         }
+    }
+
+    fetch(BASE_URL)
+    .then(response => {
+        if (! response.ok) console.warn('GET request failed');
+        return response.json()
+    })
+    .then(data => {
+        Render(data);
+    })
+
+    function Render(data){
+        console.log(data);
     }
 </script>

@@ -16,6 +16,6 @@ class AddPost extends \Magento\Framework\App\Action\Action
 
     public function execute()
     {
-       dd($this->request->getParam('foo'));
+//       dd($this->getRequest()->getParams());
     }
 }
