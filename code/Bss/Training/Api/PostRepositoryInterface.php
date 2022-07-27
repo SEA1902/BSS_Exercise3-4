@@ -23,7 +23,7 @@ interface PostRepositoryInterface
      * Retrieve pages matching the specified criteria.
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \Bss\Training\Api\Data\PostSearchResultInterface
+     * @return \Bss\Training\Api\Data\PostSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
@@ -35,4 +35,22 @@ interface PostRepositoryInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function save(PostInterface $post);
+
+    /**
+     * Delete post.
+     *
+     * @param \Bss\Training\Api\Data\PostInterface $post
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function delete(\Bss\Training\Api\Data\PostInterface $post);
+    /**
+     * Delete post by ID.
+     *
+     * @param int $postId
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function deleteById($postId);
 }

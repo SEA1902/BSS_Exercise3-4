@@ -43,7 +43,7 @@
             <label class="label p-1 font-semibold ">Show</label>
             <div class="control">
                 <div class="select">
-                    <select x-model="selectedOption" class="cursor-pointer rounded-md">
+                    <select x-model="pageSize" class="cursor-pointer rounded-md">
                         <template x-for="option in options" :key="option.value">
                             <option :key="option.value" :value="option.value" x-text="option.text"></option>
                         </template>
@@ -178,11 +178,10 @@
 <script>
     function fetchData() {
         const deleteUrl = BASE_URL + 'rest/V1/bss/training/posts/delete/';
-        const getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/';
         return {
             openEdit: false,
             openDelete: false,
-            selectedOption: "",
+            pageSize: "",
             options: [{
                 value: "5",
                 text: "5"
@@ -197,7 +196,6 @@
                 },
             ],
             searchValue: '',
-            page: 1,
             limit: 10,
             total: 50,
             posts: null,
@@ -208,6 +206,7 @@
             getPost(page = this.page) {
                 this.page = page
                 this.isLoading = true;
+                const getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]=${this.pageSize}&searchCriteria[current_page]=1';
                 fetch(getUrl)
                     .then((res) => res.json())
                     .then((data) => {
@@ -241,7 +240,6 @@
                 title:"",
                 content:"",
             },
-            message:"",
             submitPost() {
                 fetch(addUrl, {
                     method: "POST",
@@ -251,6 +249,10 @@
                     },
                     body: JSON.stringify({post: this.formData}),
                 })
+                    .then( res =>{
+                        this.formData.title = "";
+                        this.formData.content = "";
+                    })
             }
         }
     }

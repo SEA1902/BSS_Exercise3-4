@@ -30,11 +30,13 @@ class Post extends AbstractModel implements PostInterface
     }
 
     /**
-     * @inheritDoc
+     * Get ID
+     *
+     * @return int
      */
     public function getPostId(): int
     {
-        return (int) $this->getData(self::POST_ID);
+        return (int)parent::getData(self::POST_ID);
     }
 
     /**

@@ -12,10 +12,16 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-<!--    <route url="/V1/bss/training/posts/update/" method="PATCH">-->
-<!--        <service class="Bss\Training\Api\BssPostInterface" method="updateData"/>-->
-<!--        <resources>-->
-<!--            <resource ref="anonymous"/>-->
-<!--        </resources>-->
-<!--    </route>-->
+    <route url="/V1/bss/training/posts/:id" method="PUT">
+        <service class="Bss\Training\Api\PostRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/bss/training/posts/:postId" method="DELETE">
+        <service class="Bss\Training\Api\PostRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>
