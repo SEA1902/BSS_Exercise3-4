@@ -348,7 +348,9 @@ return [
         'Hyva_Email' => 1,
         'Hyva_GraphqlTokens' => 1,
         'Hyva_GraphqlViewModel' => 1,
+        'Hyva_ThemeFallback' => 1,
         'Hyva_Theme' => 1,
+        'Hyva_LumaCheckout' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
         'Temando_ShippingRemover' => 1

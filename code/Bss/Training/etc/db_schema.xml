@@ -1,7 +1,7 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
             <table name="bss_customer_posts">
-            <column xsi:type="int" name="post_id" unsigned="true" nullable="false" comment="Post Id"/>
+            <column xsi:type="int" name="post_id" unsigned="true" nullable="false" comment="Post Id" identity="true"/>
             <constraint xsi:type="primary" referenceId="PRIMARY">
                 <column name="post_id"/>
             </constraint>

@@ -18,8 +18,8 @@ return [
             'default' => [
                 'host' => 'localhost',
                 'dbname' => 'm244',
-                'username' => 'admin',
-                'password' => 'password',
+                'username' => 'biennv',
+                'password' => 'biennv',
                 'model' => 'mysql4',
                 'engine' => 'innodb',
                 'initStatements' => 'SET NAMES utf8;',

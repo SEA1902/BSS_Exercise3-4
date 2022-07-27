@@ -1,15 +1,21 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route url="/bss/training/posts/" method="POST">
-        <service class="Bss\Training\Api\BssPostInterface" method="setData"/>
+    <route url="/V1/bss/training/posts/get/" method="GET">
+        <service class="Bss\Training\Api\PostRepositoryInterface" method="getList"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/bss/training/posts/" method="GET">
-        <service class="Bss\Training\Api\BssPostInterface" method="getData"/>
+    <route url="/V1/bss/training/posts" method="POST">
+        <service class="Bss\Training\Api\PostRepositoryInterface" method="save"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
+<!--    <route url="/V1/bss/training/posts/update/" method="PATCH">-->
+<!--        <service class="Bss\Training\Api\BssPostInterface" method="updateData"/>-->
+<!--        <resources>-->
+<!--            <resource ref="anonymous"/>-->
+<!--        </resources>-->
+<!--    </route>-->
 </routes>

@@ -1,0 +1,257 @@
+<?php
+
+/**
+ * @var \Bss\Training\Block\Posts $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+?>
+<div class="flex">
+    <div  class="w-40  border-r-2">
+        <div x-data="addPost()">
+            <button @click="openAddPost = true" class="py-2 px-4 rounded text-white bg-primary">Add A Post</button>
+            <div x-show="openAddPost" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
+                <form @submit.prevent="submitPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
+                    <div class="px-4 py-2">
+                        <span class="block font-semibold pb-1">Title:</span>
+                        <input type="text" x-model="formData.title" class="p-2 w-full">
+                    </div>
+                    <div class="px-4 py-2">
+                        <span class="block font-semibold pb-1">Content:</span>
+                        <textarea class="p-2 w-full" x-model="formData.content"></textarea>
+                    </div>
+                    <div class="flex px-4 py-2 justify-evenly">
+                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Add Post</button>
+                        <button class="py-2 px-4 rounded text-white bg-red-500" @click="openAddPost =false">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<div x-data="fetchData()" data-reflect-root="" class="w-full p-8">
+    <form @submit.prevent="getPost()" class="bg-white flex align-center justify-evenly border-b-2 py-4">
+        <div class="field w-3/4">
+            <div class="control flex">
+                <input class="input w-3/4" type="text" placeholder="Event" x-model="searchValue">
+                <button type="submit" class="py-2 px-4 rounded text-white bg-primary">
+                    Search
+                </button>
+            </div>
+        </div>
+        <div class="field flex align-center">
+            <label class="label p-1 font-semibold ">Show</label>
+            <div class="control">
+                <div class="select">
+                    <select x-model="selectedOption" class="cursor-pointer rounded-md">
+                        <template x-for="option in options" :key="option.value">
+                            <option :key="option.value" :value="option.value" x-text="option.text"></option>
+                        </template>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <template x-if="!posts">
+        <tr><td colspan="4"><i>Loading...</i></td></tr>
+    </template>
+    <template x-if="posts">
+        <table class="w-full">
+            <thead>
+            <tr class="border-b-2">
+                <th class="p-4">Post ID</th>
+                <th class="p-4">Title</th>
+                <th class="p-4">Content</th>
+                <th class="p-4">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="post in posts" :key="post.post_id">
+                <tr class="border-b-2">
+                    <th class="p-4 font-medium" x-text="post.post_id"></th>
+                    <th class="p-4 font-medium" x-text="post.title"></th>
+                    <th class="p-4 font-medium" x-text="post.content"></th>
+                    <th class="p-4 font-medium flex justify-evenly">
+                        <div>
+                            <button @click="openEdit = true" class="py-2 px-4 rounded text-white bg-primary">Edit</button>
+                            <div x-show="openEdit" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
+                                <form @submit.prevent="editPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
+                                    <div class="px-4 py-2">
+                                        <span class="block font-semibold pb-1 text-left">Title:</span>
+                                        <input type="hidden" :value="post.post_id" class="p-2 w-full">
+                                    </div>
+                                    <div class="px-4 py-2">
+                                        <span class="block font-semibold pb-1 text-left">Title:</span>
+                                        <input type="text" :value="post.title" class="p-2 w-full">
+                                    </div>
+                                    <div class="px-4 py-2">
+                                        <span class="block font-semibold pb-1 text-left">Content:</span>
+                                        <textarea class="p-2 w-full" :value="post.content"></textarea>
+                                    </div>
+                                    <div class="flex px-4 py-2 justify-evenly">
+                                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Edit Post</button>
+                                        <button class="py-2 px-4 rounded text-white bg-red-500" @click="openEdit = false">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div>
+                            <button @click="openDelete = true" class="py-2 px-4 rounded text-white bg-red-500">Delete</button>
+                            <div x-show="openDelete" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
+                                <form @submit.prevent="deletePost($refs.delete.value)" class="bg-white rounded shadow-sm w-1/4 mx-auto p-4 mt-12">
+                                    <div class="px-4 py-2">
+                                        <span class="block font-semibold p-8">Xác nhận xóa Post?</span>
+                                        <input x-ref="delete" type="hidden" :value="post.post_id" class="p-2 w-full">
+                                    </div>
+                                    <div class="flex px-4 py-2 justify-evenly">
+                                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Delete Post</button>
+                                        <button class="py-2 px-4 rounded text-white bg-red-500" @click="openDelete = false">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+
+        <br />
+
+        <pagination>
+            <button
+                x-on:click="prevPage"
+                :disabled="pageNumber==0"
+                :class="{ 'disabled cursor-not-allowed text-gray-600' : pageNumber==0 }"
+            >
+                <svg
+                    class="h-8 w-8 text-indigo-600"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <!-- Display page numbers -->
+            <template x-for="(page,index) in pages()" :key="index">
+                <button
+                    class="px-3 py-2 rounded"
+                    :class="{ 'bg-indigo-600 text-white font-bold' : index === pageNumber }"
+                    type="button"
+                    x-on:click="viewPage(index)"
+                >
+                    <span x-text="index+1"></span>
+                </button>
+            </template>
+
+            <!--Next Button-->
+            <button
+                x-on:click="nextPage"
+                :disabled="pageNumber >= pageCount() -1"
+                :class="{ 'disabled cursor-not-allowed text-gray-600' : pageNumber >= pageCount() -1 }"
+            >
+                <svg
+                    class="h-8 w-8 text-indigo-600"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </pagination>
+    </template>
+</div>
+</div>
+<script>
+    function fetchData() {
+        const deleteUrl = BASE_URL + 'rest/V1/bss/training/posts/delete/';
+        const getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/';
+        return {
+            openEdit: false,
+            openDelete: false,
+            selectedOption: "",
+            options: [{
+                value: "5",
+                text: "5"
+            },
+                {
+                    value: "10",
+                    text: "10"
+                },
+                {
+                    value: "15",
+                    text: "15"
+                },
+            ],
+            searchValue: '',
+            page: 1,
+            limit: 10,
+            total: 50,
+            posts: null,
+            isLoading: false,
+            previousPage: 1,
+            nextPage: null,
+            lastPage: 0,
+            getPost(page = this.page) {
+                this.page = page
+                this.isLoading = true;
+                fetch(getUrl)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        this.posts = data;
+                    });
+            },
+            editPost(){
+
+            },
+            deletePost(post_id){
+                fetch(deleteUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: post_id,
+                })
+                    .then(response => response.json())
+            },
+        };
+    }
+</script>
+
+<script>
+    const addUrl = BASE_URL + 'rest/V1/bss/training/posts';
+    function addPost() {
+        return {
+            openAddPost: false,
+            formData: {
+                title:"",
+                content:"",
+            },
+            message:"",
+            submitPost() {
+                fetch(addUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({post: this.formData}),
+                })
+            }
+        }
+    }
+</script>
