@@ -2864,6 +2864,9 @@ a.pagebuilder-button-secondary:focus, button.pagebuilder-button-secondary:focus,
 .min-h-0 {
 	min-height: 0px;
 }
+.min-h-screen {
+	min-height: 100vh;
+}
 .w-10 {
 	width: 2.5rem;
 }
@@ -3752,6 +3755,10 @@ a.pagebuilder-button-secondary:focus, button.pagebuilder-button-secondary:focus,
 	--tw-text-opacity: 1;
 	color: rgba(229, 231, 235, var(--tw-text-opacity));
 }
+.text-indigo-600 {
+	--tw-text-opacity: 1;
+	color: rgba(79, 70, 229, var(--tw-text-opacity));
+}
 .underline {
 	text-decoration: underline;
 }
@@ -4228,6 +4235,9 @@ fieldset ~ fieldset {
 	.sm\:ml-2 {
 		margin-left: 0.5rem;
 	}
+	.sm\:mt-32 {
+		margin-top: 8rem;
+	}
 	.sm\:block {
 		display: block;
 	}
@@ -4272,6 +4282,9 @@ fieldset ~ fieldset {
 	}
 	.sm\:overflow-hidden {
 		overflow: hidden;
+	}
+	.sm\:p-8 {
+		padding: 2rem;
 	}
 	.sm\:px-6 {
 		padding-left: 1.5rem;

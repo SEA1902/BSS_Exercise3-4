@@ -24,20 +24,18 @@ class DiscountAmount
             $current_group_customer_id = 0;
         }
         $dataDiscount = $this->discountAmount->getData();
-        if ($dataDiscount != null){
-            $dataDiscount = json_decode($dataDiscount['discount_amount']);
-            if (gettype($dataDiscount) == "object") {
-                foreach ($dataDiscount as $groupid => $value) {
-                    if ($current_group_customer_id == $groupid) {
-                        return $result * (1 - $value / 100);
-                    } elseif ($current_group_customer_id == 32000) {
-                        return $result * (1 - $value / 100);
-                    }
+        $dataDiscount = json_decode($dataDiscount['discount_amount']);
+        if(empty($dataDiscount)) return $result;
+        if (gettype($dataDiscount) == "object") {
+            foreach ($dataDiscount as $groupid => $value) {
+                if ($current_group_customer_id == $groupid) {
+                    return $result * (1 - $value / 100);
+                } elseif ($current_group_customer_id == 32000) {
+                    return $result * (1 - $value / 100);
                 }
-            } else {
-                return $result * (1 - $dataDiscount / 100);
             }
+        } else {
+            return $result * (1 - $dataDiscount / 100);
         }
-        return $result;
     }
 }

@@ -6,15 +6,19 @@
  */
 
 ?>
-<div class="flex">
-    <div  class="w-40  border-r-2">
+<div class="block sm:flex">
+    <div  class="w-40 mt-12">
+<!------------------------add post-------------->
         <div x-data="addPost()">
             <button @click="openAddPost = true" class="py-2 px-4 rounded text-white bg-primary">Add A Post</button>
-            <div x-show="openAddPost" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
+            <div x-show="openAddPost" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
                 <form @submit.prevent="submitPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
                     <div class="px-4 py-2">
                         <span class="block font-semibold pb-1">Title:</span>
                         <input type="text" x-model="formData.title" class="p-2 w-full">
+                        <span class="text-sm italic text-red-500">
+                            <div x-text="message"></div>
+                        </span>
                     </div>
                     <div class="px-4 py-2">
                         <span class="block font-semibold pb-1">Content:</span>
@@ -29,203 +33,241 @@
         </div>
     </div>
 
-<div x-data="fetchData()" data-reflect-root="" class="w-full p-8">
-    <form @submit.prevent="getPost()" class="bg-white flex align-center justify-evenly border-b-2 py-4">
-        <div class="field w-3/4">
-            <div class="control flex">
-                <input class="input w-3/4" type="text" placeholder="Event" x-model="searchValue">
-                <button type="submit" class="py-2 px-4 rounded text-white bg-primary">
-                    Search
-                </button>
-            </div>
-        </div>
-        <div class="field flex align-center">
-            <label class="label p-1 font-semibold ">Show</label>
-            <div class="control">
-                <div class="select">
-                    <select x-model="pageSize" class="cursor-pointer rounded-md">
-                        <template x-for="option in options" :key="option.value">
-                            <option :key="option.value" :value="option.value" x-text="option.text"></option>
+    <div x-data="loadData()" x-init="getPost()" @private-content-loaded.window="onPrivateContentLoaded(event.detail.data)" data-reflect-root="" class="w-full sm:p-8">
+<!----------nav-------->
+        <div class="bg-white align-center justify-evenly border-b-2 py-4 sm:flex">
+            <form @submit.prevent="getPost()" class="sm:w-3/4 py-2">
+                <div class="field">
+                    <div class="control flex">
+                        <input class="input w-3/4" type="text" placeholder="Enter title for search" x-model="searchValue">
+                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="field flex align-center py-2">
+                <label class="label p-2 font-semibold ">Show</label>
+                <div class="control">
+                    <select x-model.number="pageSize" @change="changePageSize()" class="cursor-pointer rounded-md select">
+                        <template x-for="sizePage in [5,10,15]">
+                            <option :value="sizePage" x-text="sizePage"></option>
                         </template>
                     </select>
                 </div>
             </div>
         </div>
-    </form>
-    <template x-if="!posts">
-        <tr><td colspan="4"><i>Loading...</i></td></tr>
-    </template>
-    <template x-if="posts">
-        <table class="w-full">
-            <thead>
-            <tr class="border-b-2">
-                <th class="p-4">Post ID</th>
-                <th class="p-4">Title</th>
-                <th class="p-4">Content</th>
-                <th class="p-4">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <template x-for="post in posts" :key="post.post_id">
-                <tr class="border-b-2">
-                    <th class="p-4 font-medium" x-text="post.post_id"></th>
-                    <th class="p-4 font-medium" x-text="post.title"></th>
-                    <th class="p-4 font-medium" x-text="post.content"></th>
-                    <th class="p-4 font-medium flex justify-evenly">
-                        <div>
-                            <button @click="openEdit = true" class="py-2 px-4 rounded text-white bg-primary">Edit</button>
-                            <div x-show="openEdit" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
-                                <form @submit.prevent="editPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
-                                    <div class="px-4 py-2">
-                                        <span class="block font-semibold pb-1 text-left">Title:</span>
-                                        <input type="hidden" :value="post.post_id" class="p-2 w-full">
+<!-- -----------grid post---------->
+        <template x-if="!posts">
+            <tr><td colspan="4"><i>Loading...</i></td></tr>
+        </template>
+        <template x-if="posts">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                    <tr class="border-b-2">
+                        <th class="p-4">Post ID</th>
+                        <th class="p-4">Title</th>
+                        <th class="p-4">Content</th>
+                        <th class="p-4">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template x-for="(post,index) in posts" :key="post.post_id">
+                        <tr class="border-b-2">
+                            <th class="p-4 font-medium" x-text="post.post_id"></th>
+                            <th x-show="post.title.length < 100" class="p-4 font-medium" x-text="post.title"></th>
+                            <th x-show="post.title.length > 100" class="p-4 font-medium" x-text="post.title.slice(0,99)+'...'"></th>
+                            <th x-show="post.content.length < 100" class="p-4 font-medium" x-text="post.content"></th>
+                            <th x-show="post.content.length > 100" class="p-4 font-medium" x-text="post.content.slice(0,99)+'...'"></th>
+                            <th class="p-4 font-medium flex justify-evenly">
+                                <div>
+                                    <button @click="openEdit = post.post_id" class="py-2 px-4 rounded text-white bg-primary">Edit</button>
+                                    <div x-show="openEdit === post.post_id" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
+                                        <form @submit.prevent="editPost(index)" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
+                                            <div class="px-4 py-2">y
+                                                <span class="block font-semibold pb-1 text-left">Title:</span>
+                                                <input name="title" type="text" x-model="post.title" class="p-2 w-full">
+                                            </div>
+                                            <div class="px-4 py-2">
+                                                <span class="block font-semibold pb-1 text-left">Content:</span>
+                                                <textarea name="content" class="p-2 w-full" x-model="post.content"></textarea>
+                                            </div>
+                                            <div class="flex px-4 py-2 justify-evenly">
+                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openEdit = false">Edit Post</button>
+                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openEdit = false">Cancel</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="px-4 py-2">
-                                        <span class="block font-semibold pb-1 text-left">Title:</span>
-                                        <input type="text" :value="post.title" class="p-2 w-full">
+                                </div>
+                                <div>
+                                    <button @click="openDelete = post.post_id" class="py-2 px-4 rounded text-white bg-red-500">Delete</button>
+                                    <div x-show="openDelete === post.post_id" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
+                                        <form @submit.prevent="deletePost(post.post_id)" class="bg-white rounded shadow-sm w-1/4 mx-auto p-4 mt-12">
+                                            <div class="px-4 py-2">
+                                                <span class="block font-semibold p-8 mb-6 text-center text-lg">Xác nhận muốn xóa Post?</span>
+                                            </div>
+                                            <div class="flex px-4 py-2 justify-evenly">
+                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openDelete = false">Delete Post</button>
+                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openDelete = false">Cancel</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="px-4 py-2">
-                                        <span class="block font-semibold pb-1 text-left">Content:</span>
-                                        <textarea class="p-2 w-full" :value="post.content"></textarea>
-                                    </div>
-                                    <div class="flex px-4 py-2 justify-evenly">
-                                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Edit Post</button>
-                                        <button class="py-2 px-4 rounded text-white bg-red-500" @click="openEdit = false">Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div>
-                            <button @click="openDelete = true" class="py-2 px-4 rounded text-white bg-red-500">Delete</button>
-                            <div x-show="openDelete" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen p-8 pt-16">
-                                <form @submit.prevent="deletePost($refs.delete.value)" class="bg-white rounded shadow-sm w-1/4 mx-auto p-4 mt-12">
-                                    <div class="px-4 py-2">
-                                        <span class="block font-semibold p-8">Xác nhận xóa Post?</span>
-                                        <input x-ref="delete" type="hidden" :value="post.post_id" class="p-2 w-full">
-                                    </div>
-                                    <div class="flex px-4 py-2 justify-evenly">
-                                        <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Delete Post</button>
-                                        <button class="py-2 px-4 rounded text-white bg-red-500" @click="openDelete = false">Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </th>
-                </tr>
-            </template>
-            </tbody>
-        </table>
-
-        <br />
-
-        <pagination>
-            <button
-                x-on:click="prevPage"
-                :disabled="pageNumber==0"
-                :class="{ 'disabled cursor-not-allowed text-gray-600' : pageNumber==0 }"
-            >
-                <svg
-                    class="h-8 w-8 text-indigo-600"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-
-            <!-- Display page numbers -->
-            <template x-for="(page,index) in pages()" :key="index">
+                                </div>
+                            </th>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+            </div>
+<!-------------pagination---------------->
+            <pagination class="flex justify-center p-8">
                 <button
-                    class="px-3 py-2 rounded"
-                    :class="{ 'bg-indigo-600 text-white font-bold' : index === pageNumber }"
-                    type="button"
-                    x-on:click="viewPage(index)"
+                    @click="prevPage()"
+                    :disabled="currentPage==1"
+                    :class="{ 'disabled cursor-not-allowed text-gray-600' : currentPage==1 }"
                 >
-                    <span x-text="index+1"></span>
+                    <svg
+                        class="h-8 w-8 text-indigo-600 "
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
                 </button>
-            </template>
 
-            <!--Next Button-->
-            <button
-                x-on:click="nextPage"
-                :disabled="pageNumber >= pageCount() -1"
-                :class="{ 'disabled cursor-not-allowed text-gray-600' : pageNumber >= pageCount() -1 }"
-            >
-                <svg
-                    class="h-8 w-8 text-indigo-600"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                <!-- Display page numbers -->
+                <template x-for="(page,index) in pages()" :key="index">
+                    <button
+                        class="px-3 py-2 rounded"
+                        :class="{ 'bg-primary text-white font-bold' : (index+1) === currentPage }"
+                        type="button"
+                        @click="viewPage(index+1)"
+                    >
+                        <span x-text="index+1"></span>
+                    </button>
+                </template>
+
+                <!--Next Button-->
+                <button
+                    @click="nextPage()"
+                    :disabled="currentPage >= pageCount() "
+                    :class="{ 'disabled cursor-not-allowed text-gray-600' : currentPage >= pageCount()  }"
                 >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </pagination>
-    </template>
-</div>
+                    <svg
+                        class="h-8 w-8 text-indigo-600"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </pagination>
+        </template>
+    </div>
 </div>
 <script>
-    function fetchData() {
-        const deleteUrl = BASE_URL + 'rest/V1/bss/training/posts/delete/';
+    function loadData() {
         return {
             openEdit: false,
             openDelete: false,
-            pageSize: "",
-            options: [{
-                value: "5",
-                text: "5"
-            },
-                {
-                    value: "10",
-                    text: "10"
-                },
-                {
-                    value: "15",
-                    text: "15"
-                },
-            ],
+            pageSize: 5,
+            currentPage: 1,
+            total: "",
             searchValue: '',
-            limit: 10,
-            total: 50,
             posts: null,
             isLoading: false,
-            previousPage: 1,
-            nextPage: null,
-            lastPage: 0,
-            getPost(page = this.page) {
-                this.page = page
+            formUpdate:{
+                post_id:"",
+                title:"",
+                content:"",
+            },
+            customerToken: false,
+            onPrivateContentLoaded(data) {
+                this.customerToken = data.customer['signin_token'];
+                if (this.customerToken) {
+                    this.getPost();
+                }
+
+            },
+            getPost() {
                 this.isLoading = true;
-                const getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]=${this.pageSize}&searchCriteria[current_page]=1';
+                let getUrl;
+                if(this.searchValue == ""){
+                    getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]='+this.pageSize+'&searchCriteria[currentPage]='+this.currentPage;
+                } else{
+                    getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]='+this.pageSize+'&searchCriteria[currentPage]='+this.currentPage +
+                        '&searchCriteria[filter_groups][0][filters][0][field]=title&searchCriteria[filter_groups][0][filters][0][value]='+this.searchValue;
+                }
                 fetch(getUrl)
                     .then((res) => res.json())
                     .then((data) => {
-                        this.posts = data;
+                        this.posts = data["items"];
+                        this.total = data["total_count"];
                     });
             },
-            editPost(){
-
+            //Create array of all pages (for loop to display page numbers)
+            pages() {
+                return Array.from({
+                    length: Math.ceil(this.total / this.pageSize),
+                });
             },
-            deletePost(post_id){
-                fetch(deleteUrl, {
-                    method: "POST",
+            //Next Page
+            nextPage() {
+                this.currentPage++;
+                this.getPost();
+            },
+
+            //Previous Page
+            prevPage() {
+                this.currentPage--;
+                this.getPost();
+            },
+
+            //Total number of pages
+            pageCount(){
+                return Math.ceil(this.total / this.pageSize);
+                this.getPost();
+            },
+            //Link to navigate to page
+            viewPage(index) {
+                this.currentPage = index;
+                this.getPost();
+            },
+            changePageSize(){
+                this.pages();
+                this.getPost();
+            },
+            editPost(index){
+                this.formUpdate = this.posts[index];
+                const editUrl = BASE_URL + 'rest/V1/bss/training/posts/';
+                fetch(editUrl , {
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
                     },
-                    body: post_id,
+                    body: JSON.stringify({post:this.formUpdate}),
                 })
-                    .then(response => response.json())
+            },
+            deletePost(post_id){
+                let deleteUrl = BASE_URL + 'rest/V1/bss/training/posts/' + post_id;
+                fetch(deleteUrl, {
+                    method: "DELETE",
+                })
+                this.getPost();
             },
         };
     }
@@ -240,7 +282,12 @@
                 title:"",
                 content:"",
             },
+            message:"",
             submitPost() {
+                if(!this.formData.title.length){
+                    this.message = "Title is required!";
+                    return;
+                }
                 fetch(addUrl, {
                     method: "POST",
                     headers: {
@@ -252,6 +299,7 @@
                     .then( res =>{
                         this.formData.title = "";
                         this.formData.content = "";
+                        this.message ="";
                     })
             }
         }

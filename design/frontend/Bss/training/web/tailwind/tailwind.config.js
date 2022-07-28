@@ -136,7 +136,7 @@ module.exports = hyvaModules.mergeTailwindConfig({
             // parent theme in Vendor (if this is a child-theme)
             '../../../../../../../vendor/hyva-themes/magento2-default-theme/**/*.phtml',
             // app/code phtml files (if need tailwind classes from app/code modules)
-            //'../../../../../../../app/code/**/*.phtml',
+            '../../../../../../../app/code/**/*.phtml',
             // react app src files (if Hyvä Checkout is installed in app/code)
             //'../../../../../../../app/code/**/src/**/*.jsx',
             // react app src files in vendor (If Hyvä Checkout is installed in vendor)

@@ -3,4 +3,7 @@
     <event name="sales_order_place_after">
         <observer name="bss_update_reward_point" instance="Bss\Training\Observer\UpdateRewardPoint" />
     </event>
+    <event name="hyva_config_generate_before">
+        <observer name="add_src" instance="Bss\Training\Observer\RegisterModuleForHyvaConfig" />
+    </event>
 </config>

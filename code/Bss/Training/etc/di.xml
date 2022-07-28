@@ -2,6 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Bss\Training\Api\PostRepositoryInterface" type="Bss\Training\Model\PostRepository" />
     <preference for="Bss\Training\Api\Data\PostInterface" type="Bss\Training\Model\Post" />
+    <preference for="Bss\Training\Api\Data\PostSearchResultsInterface" type="Bss\Training\Model\Post" />
 
     <type name="Magento\Catalog\Model\Product">
         <plugin name="discount_amount_product" type="Bss\Training\Plugin\DiscountAmount"/>

@@ -41,10 +41,6 @@ class PostRepository implements PostRepositoryInterface
      * @var PostInterfaceFactory
      */
     protected $dataPostFactory;
-    /**
-     * @var ResourceModel\Post
-     */
-    private $postResourceModel;
 
     /**
      * @param ResourcePost $resource
@@ -60,7 +56,6 @@ class PostRepository implements PostRepositoryInterface
     ResourcePost $resource,
     PostFactory $postFactory,
     PostInterfaceFactory $dataPostFactory,
-    Post $postResourceModel,
     CollectionProcessorInterface $collectionProcessor = null,
     PostSearchResultsInterfaceFactory $searchResultsFactory,
     PostCollectionFactory $postCollectionFactory
@@ -71,7 +66,6 @@ class PostRepository implements PostRepositoryInterface
         $this->dataPostFactory = $dataPostFactory;
         $this->postCollectionFactory = $postCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->postResourceModel = $postResourceModel;
         $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
     }
 
@@ -81,29 +75,31 @@ class PostRepository implements PostRepositoryInterface
     public function save(PostInterface $post)
     {
         $currentTime = $this->date->gmtDate();
+        $title = $post->getTitle();
+        $content = $post->getContent();
         if (!empty($post->getPostId())) {
             $post = $this->getById((int) $post->getPostId());
-        } else{
+            $post->setTitle($title);
+            $post->setContent($content);
+        } else {
             $post->setData(PostInterface::CREATED_AT, $currentTime);
         }
         $post->setData(PostInterface::UPDATED_AT, $currentTime);
-
-        $this->postResourceModel->save($post);
-        return 'success';
-        //Customize the code as per your requirement.
+        $this->resource->save($post);
+        return $post;
 
     }
-    /**
-     * Load Page data by given Page Identity
-     *
-     * @param string $postId
-     * @return Post
-     * @throws NoSuchEntityException
-     */
+//    /**
+//     * Load Page data by given Page Identity
+//     *
+//     * @param string $postId
+//     * @return Post
+//     * @throws NoSuchEntityException
+//     */
     public function getById($postId)
     {
         $post = $this->postFactory->create();
-        $this->postResourceModel->load($post, $postId);
+        $this->resource->load($post, $postId);
 
         if (!$post->getPostId()) {
             throw new NoSuchEntityException(__("Post not found!"));
