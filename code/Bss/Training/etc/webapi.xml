@@ -3,29 +3,29 @@
     <route url="/V1/bss/training/posts/get/" method="GET">
         <service class="Bss\Training\Api\PostRepositoryInterface" method="getList"/>
         <resources>
-            <resource ref="self"/>
-<!--            <resource ref="anonymous"/>-->
+<!--            <resource ref="self"/>-->
+            <resource ref="anonymous"/>
         </resources>
     </route>
     <route url="/V1/bss/training/posts" method="POST">
         <service class="Bss\Training\Api\PostRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="self"/>
-<!--            <resource ref="anonymous"/>-->
+<!--            <resource ref="self"/>-->
+            <resource ref="anonymous"/>
         </resources>
     </route>
     <route url="/V1/bss/training/posts" method="PUT">
         <service class="Bss\Training\Api\PostRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="self"/>
-<!--            <resource ref="anonymous"/>-->
+<!--            <resource ref="self"/>-->
+            <resource ref="anonymous"/>
         </resources>
     </route>
     <route url="/V1/bss/training/posts/:postId" method="DELETE">
         <service class="Bss\Training\Api\PostRepositoryInterface" method="deleteById"/>
         <resources>
-<!--            <resource ref="anonymous"/>-->
-            <resource ref="self"/>
+            <resource ref="anonymous"/>
+<!--            <resource ref="self"/>-->
         </resources>
     </route>
 </routes>

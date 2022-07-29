@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <referenceContainer name="content">
-        <block class="Bss\Training\Block\Posts" name="training_posts" template="Bss_Training::bss_training_posts.phtml" />
+        <block class="Bss\Training\Block\Posts" name="training_posts" template="Bss_Training::bss_training_posts.phtml">
+            <block name="loading" template="Hyva_Theme::ui/loading.phtml"/>
+        </block>
+<!--        <block name="loading" template="Hyva_Theme::ui/loading.phtml"/>-->
     </referenceContainer>
 </page>
