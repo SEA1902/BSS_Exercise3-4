@@ -15,23 +15,33 @@
             <div class="bg-white align-center justify-evenly border-b-2 py-4 sm:flex">
                 <!------------------------add post-------------->
                 <div  class="py-3">
-                    <button @click="openAddPost = true" class="py-2 px-4 rounded text-white bg-primary">Add A Post</button>
+                    <button @click="openAddPost = true" class="py-2 px-4 rounded text-white bg-primary">
+                        <?= $escaper->escapeHtml(__('Add A Post')) ?>
+                    </button>
                     <div x-show="openAddPost" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
                         <form @submit.prevent="submitPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
                             <div class="px-4 py-2">
-                                <span class="block font-semibold pb-1">Title:</span>
+                                <span class="block font-semibold pb-1">
+                                    <?= $escaper->escapeHtml(__('Title:')) ?>
+                                </span>
                                 <input type="text" x-model="formData.title" class="p-2 w-full">
                                 <span class="text-sm italic text-red-500">
                             <div x-text="message"></div>
                         </span>
                             </div>
                             <div class="px-4 py-2">
-                                <span class="block font-semibold pb-1">Content:</span>
+                                <span class="block font-semibold pb-1">
+                                    <?= $escaper->escapeHtml(__('Content:')) ?>
+                                </span>
                                 <textarea class="p-2 w-full" x-model="formData.content"></textarea>
                             </div>
                             <div class="flex px-4 py-2 justify-evenly">
-                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary">Add Post</button>
-                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openAddPost =false">Cancel</button>
+                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary">
+                                    <?= $escaper->escapeHtml(__('Add Post')) ?>
+                                </button>
+                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openAddPost =false">
+                                    <?= $escaper->escapeHtml(__('Cancel')) ?>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -42,7 +52,7 @@
                         <div class="control flex">
                             <input class="input w-3/4" type="text" placeholder="Enter title for search" x-model="searchValue">
                             <button type="submit" class="py-2 px-4 rounded text-white bg-primary">
-                                Search
+                                <?= $escaper->escapeHtml(__('Search')) ?>
                             </button>
                         </div>
                     </div>
@@ -66,10 +76,18 @@
                 <table class="w-full">
                     <thead>
                     <tr class="border-b-2">
-                        <th class="p-4">Post ID</th>
-                        <th class="p-4">Title</th>
-                        <th class="p-4">Content</th>
-                        <th class="p-4">Action</th>
+                        <th class="p-4">
+                            <?= $escaper->escapeHtml(__('Post Id')) ?>
+                        </th>
+                        <th class="p-4">
+                            <?= $escaper->escapeHtml(__('Title')) ?>
+                        </th>
+                        <th class="p-4">
+                            <?= $escaper->escapeHtml(__('Content')) ?>
+                        </th>
+                        <th class="p-4">
+                            <?= $escaper->escapeHtml(__('Action')) ?>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,35 +99,55 @@
                             <th x-show="post.content.length < 100" class="p-4 font-medium" x-text="post.content"></th>
                             <th x-show="post.content.length > 100" class="p-4 font-medium" x-text="post.content.slice(0,99)+'...'"></th>
                             <th class="p-4 font-medium flex justify-evenly">
+<!--                                edit post-->
                                 <div>
-                                    <button @click="openEdit = post.post_id" class="py-2 px-4 rounded text-white bg-primary">Edit</button>
+                                    <button @click="openEdit = post.post_id" class="py-2 px-4 rounded text-white bg-primary">
+                                        <?= $escaper->escapeHtml(__('Edit')) ?>
+                                    </button>
                                     <div x-show="openEdit === post.post_id" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
                                         <form @submit.prevent="editPost(index)" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
                                             <div class="px-4 py-2">
-                                                <span class="block font-semibold pb-1 text-left">Title:</span>
+                                                <span class="block font-semibold pb-1 text-left">
+                                                    <?= $escaper->escapeHtml(__('Title:')) ?>
+                                                </span>
                                                 <input name="title" type="text" x-model="post.title" class="p-2 w-full">
                                             </div>
                                             <div class="px-4 py-2">
-                                                <span class="block font-semibold pb-1 text-left">Content:</span>
+                                                <span class="block font-semibold pb-1 text-left">
+                                                    <?= $escaper->escapeHtml(__('Content:')) ?>
+                                                </span>
                                                 <textarea name="content" class="p-2 w-full" x-model="post.content"></textarea>
                                             </div>
                                             <div class="flex px-4 py-2 justify-evenly">
-                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openEdit = false">Edit Post</button>
-                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openEdit = false">Cancel</button>
+                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openEdit = false">
+                                                    <?= $escaper->escapeHtml(__('Edit Post:')) ?>
+                                                </button>
+                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openEdit = false">
+                                                    <?= $escaper->escapeHtml(__('Cancel:')) ?>
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
+<!--                                delete post-->
                                 <div>
-                                    <button @click="openDelete = post.post_id" class="py-2 px-4 rounded text-white bg-red-500">Delete</button>
+                                    <button @click="openDelete = post.post_id" class="py-2 px-4 rounded text-white bg-red-500">
+                                        <?= $escaper->escapeHtml(__('Delete:')) ?>
+                                    </button>
                                     <div x-show="openDelete === post.post_id" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
                                         <form @submit.prevent="deletePost(post.post_id)" class="bg-white rounded shadow-sm w-1/4 mx-auto p-4 mt-12">
                                             <div class="px-4 py-2">
-                                                <span class="block font-semibold p-8 mb-6 text-center text-lg">Xác nhận muốn xóa Post?</span>
+                                                <span class="block font-semibold p-8 mb-6 text-center text-lg">
+                                                    <?= $escaper->escapeHtml(__('Xác nhận muốn xóa Post?')) ?>
+                                                </span>
                                             </div>
                                             <div class="flex px-4 py-2 justify-evenly">
-                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openDelete = false">Delete Post</button>
-                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openDelete = false">Cancel</button>
+                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openDelete = false">
+                                                    <?= $escaper->escapeHtml(__('Delete Post')) ?>
+                                                </button>
+                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openDelete = false">
+                                                    <?= $escaper->escapeHtml(__('Cancel')) ?>
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
