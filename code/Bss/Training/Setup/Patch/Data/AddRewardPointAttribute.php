@@ -33,10 +33,9 @@ class AddRewardPointAttribute implements DataPatchInterface
      */
     public function __construct(
         ModuleDataSetupInterface $setup,
-        Config $eavConfig,
-        CustomerSetupFactory $customerSetupFactory
-    )
-    {
+        Config                   $eavConfig,
+        CustomerSetupFactory     $customerSetupFactory
+    ) {
         $this->customerSetupFactory = $customerSetupFactory;
         $this->setup = $setup;
         $this->eavConfig = $eavConfig;
@@ -58,7 +57,7 @@ class AddRewardPointAttribute implements DataPatchInterface
         ]);
         $newAttribute = $this->eavConfig->getAttribute(Customer::ENTITY, 'reward_point');
         $newAttribute->addData([
-            'used_in_forms' => ['adminhtml_checkout','adminhtml_customer'],
+            'used_in_forms' => ['adminhtml_checkout', 'adminhtml_customer'],
             'attribute_set_id' => $attributeSetId,
             'attribute_group_id' => $attributeGroup
         ]);

@@ -1,5 +1,7 @@
 <?php
+
 namespace Bss\Training\Model;
+
 use Bss\Training\Api\PostRepositoryInterface;
 use Bss\Training\Api\Data\PostInterface;
 use Bss\Training\Api\Data\PostInterfaceFactory;
@@ -52,13 +54,13 @@ class PostRepository implements PostRepositoryInterface
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-    \Magento\Framework\Stdlib\DateTime\DateTime $date,
-    ResourcePost $resource,
-    PostFactory $postFactory,
-    PostInterfaceFactory $dataPostFactory,
-    CollectionProcessorInterface $collectionProcessor = null,
-    PostSearchResultsInterfaceFactory $searchResultsFactory,
-    PostCollectionFactory $postCollectionFactory
+        \Magento\Framework\Stdlib\DateTime\DateTime $date,
+        ResourcePost                                $resource,
+        PostFactory                                 $postFactory,
+        PostInterfaceFactory                        $dataPostFactory,
+        CollectionProcessorInterface                $collectionProcessor = null,
+        PostSearchResultsInterfaceFactory           $searchResultsFactory,
+        PostCollectionFactory                       $postCollectionFactory
     ) {
         $this->date = $date;
         $this->resource = $resource;
@@ -78,7 +80,7 @@ class PostRepository implements PostRepositoryInterface
         $title = $post->getTitle();
         $content = $post->getContent();
         if (!empty($post->getPostId())) {
-            $post = $this->getById((int) $post->getPostId());
+            $post = $this->getById((int)$post->getPostId());
             $post->setTitle($title);
             $post->setContent($content);
         } else {
@@ -107,6 +109,7 @@ class PostRepository implements PostRepositoryInterface
 
         return $post;
     }
+
     /**
      * Load Post data collection by given search criteria
      *
@@ -127,6 +130,7 @@ class PostRepository implements PostRepositoryInterface
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;
     }
+
     /**
      * Delete Page
      *
@@ -145,6 +149,7 @@ class PostRepository implements PostRepositoryInterface
         }
         return true;
     }
+
     /**
      * Delete Page by given Page Identity
      *
@@ -157,11 +162,12 @@ class PostRepository implements PostRepositoryInterface
     {
         return $this->delete($this->getById($postId));
     }
+
     /**
      * Retrieve collection processor
      *
-     * @deprecated 102.0.0
      * @return CollectionProcessorInterface
+     * @deprecated 102.0.0
      */
     private function getCollectionProcessor()
     {

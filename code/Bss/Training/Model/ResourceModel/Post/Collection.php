@@ -1,4 +1,5 @@
 <?php
+
 namespace Bss\Training\Model\ResourceModel\Post;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection

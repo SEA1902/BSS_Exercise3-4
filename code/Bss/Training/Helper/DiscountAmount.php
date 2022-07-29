@@ -11,9 +11,9 @@ use Magento\Customer\Api\GroupManagementInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\Store;
-
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
+
 /**
  * MinSaleQty value manipulation helper
  */
@@ -52,8 +52,7 @@ class DiscountAmount extends AbstractHelper
         \Magento\Framework\Math\Random                     $mathRandom,
         GroupManagementInterface                           $groupManagement,
         Json                                               $serializer = null
-    )
-    {
+    ) {
         $this->scopeConfig = $scopeConfig;
         $this->mathRandom = $mathRandom;
         $this->groupManagement = $groupManagement;
@@ -218,10 +217,17 @@ class DiscountAmount extends AbstractHelper
         return $this->groupManagement->getAllCustomersGroup()->getId();
     }
 
-    public function getData() {
+    /**
+     * Get data
+     *
+     * @return mixed
+     */
+    public function getData()
+    {
         return $this->scopeConfig->getValue(
             "general/discount_price_per_customer_group",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null
+            ScopeInterface::SCOPE_STORE,
+            null
         );
     }
 }

@@ -3,11 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Bss\Training\Model;
 /**
  * Backend for serialized array data
  */
-
 class DiscountAmount extends \Magento\Framework\App\Config\Value
 {
     protected $groupRepository;
@@ -18,6 +18,7 @@ class DiscountAmount extends \Magento\Framework\App\Config\Value
      * @var \Bss\Training\Helper\DiscountAmount
      */
     protected $_discountAmount = null;
+
     /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -29,14 +30,14 @@ class DiscountAmount extends \Magento\Framework\App\Config\Value
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\App\Config\ScopeConfigInterface $config,
-        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
-        \Bss\Training\Helper\DiscountAmount $discountAmount,
+        \Magento\Framework\Model\Context                        $context,
+        \Magento\Framework\Registry                             $registry,
+        \Magento\Framework\App\Config\ScopeConfigInterface      $config,
+        \Magento\Framework\App\Cache\TypeListInterface          $cacheTypeList,
+        \Bss\Training\Helper\DiscountAmount                     $discountAmount,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = []
+        \Magento\Framework\Data\Collection\AbstractDb           $resourceCollection = null,
+        array                                                   $data = []
     ) {
         $this->_discountAmount = $discountAmount;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);

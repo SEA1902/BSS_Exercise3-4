@@ -12,6 +12,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setContent(string $value);

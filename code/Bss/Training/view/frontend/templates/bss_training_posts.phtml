@@ -6,19 +6,21 @@
  */
 
 ?>
-<section class="block sm:flex" x-data="loadData()"  @private-content-loaded.window="onPrivateContentLoaded($event.detail.data)" >
-<!--    loadData-->
+<section class="block sm:flex" x-data="loadData()"
+         @private-content-loaded.window="onPrivateContentLoaded($event.detail.data)">
+    <!--    loadData-->
     <?= $block->getChildHtml('loading') ?>
     <template x-if="posts && !isLoading">
         <div class="w-full sm:p-8">
             <!----------nav-------->
             <div class="bg-white align-center justify-evenly border-b-2 py-4 sm:flex">
                 <!------------------------add post-------------->
-                <div  class="py-3">
+                <div class="py-3">
                     <button @click="openAddPost = true" class="py-2 px-4 rounded text-white bg-primary">
                         <?= $escaper->escapeHtml(__('Add A Post')) ?>
                     </button>
-                    <div x-show="openAddPost" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
+                    <div x-show="openAddPost"
+                         class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
                         <form @submit.prevent="submitPost()" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
                             <div class="px-4 py-2">
                                 <span class="block font-semibold pb-1">
@@ -50,7 +52,8 @@
                 <form @submit.prevent="getPost()" class="sm:w-3/4 py-2">
                     <div class="field">
                         <div class="control flex">
-                            <input class="input w-3/4" type="text" placeholder="Enter title for search" x-model="searchValue">
+                            <input class="input w-3/4" type="text" placeholder="Enter title for search"
+                                   x-model="searchValue">
                             <button type="submit" class="py-2 px-4 rounded text-white bg-primary">
                                 <?= $escaper->escapeHtml(__('Search')) ?>
                             </button>
@@ -61,7 +64,8 @@
                 <div class="field flex align-center py-2">
                     <label class="label p-2 font-semibold ">Show</label>
                     <div class="control">
-                        <select x-model.number="pageSize" @change="changePageSize()" class="cursor-pointer rounded-md select">
+                        <select x-model.number="pageSize" @change="changePageSize()"
+                                class="cursor-pointer rounded-md select">
                             <template x-for="sizePage in [5,10,15]">
                                 <option :value="sizePage" x-text="sizePage"></option>
                             </template>
@@ -95,17 +99,22 @@
                         <tr class="border-b-2">
                             <th class="p-4 font-medium" x-text="post.post_id"></th>
                             <th x-show="post.title.length < 100" class="p-4 font-medium" x-text="post.title"></th>
-                            <th x-show="post.title.length > 100" class="p-4 font-medium" x-text="post.title.slice(0,99)+'...'"></th>
+                            <th x-show="post.title.length > 100" class="p-4 font-medium"
+                                x-text="post.title.slice(0,99)+'...'"></th>
                             <th x-show="post.content.length < 100" class="p-4 font-medium" x-text="post.content"></th>
-                            <th x-show="post.content.length > 100" class="p-4 font-medium" x-text="post.content.slice(0,99)+'...'"></th>
+                            <th x-show="post.content.length > 100" class="p-4 font-medium"
+                                x-text="post.content.slice(0,99)+'...'"></th>
                             <th class="p-4 font-medium flex justify-evenly">
-<!--                                edit post-->
+                                <!--                                edit post-->
                                 <div>
-                                    <button @click="openEdit = post.post_id" class="py-2 px-4 rounded text-white bg-primary">
+                                    <button @click="openEdit = post.post_id"
+                                            class="py-2 px-4 rounded text-white bg-primary">
                                         <?= $escaper->escapeHtml(__('Edit')) ?>
                                     </button>
-                                    <div x-show="openEdit === post.post_id" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
-                                        <form @submit.prevent="editPost(index)" class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
+                                    <div x-show="openEdit === post.post_id"
+                                         class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
+                                        <form @submit.prevent="editPost(index)"
+                                              class="bg-white rounded shadow-sm w-3/4 mx-auto p-4 mt-12">
                                             <div class="px-4 py-2">
                                                 <span class="block font-semibold pb-1 text-left">
                                                     <?= $escaper->escapeHtml(__('Title:')) ?>
@@ -116,36 +125,44 @@
                                                 <span class="block font-semibold pb-1 text-left">
                                                     <?= $escaper->escapeHtml(__('Content:')) ?>
                                                 </span>
-                                                <textarea name="content" class="p-2 w-full" x-model="post.content"></textarea>
+                                                <textarea name="content" class="p-2 w-full"
+                                                          x-model="post.content"></textarea>
                                             </div>
                                             <div class="flex px-4 py-2 justify-evenly">
-                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openEdit = false">
+                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary"
+                                                        @click="openEdit = false">
                                                     <?= $escaper->escapeHtml(__('Edit Post:')) ?>
                                                 </button>
-                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openEdit = false">
+                                                <button class="py-2 px-4 rounded text-white bg-red-500"
+                                                        @click="openEdit = false">
                                                     <?= $escaper->escapeHtml(__('Cancel:')) ?>
                                                 </button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-<!--                                delete post-->
+                                <!--                                delete post-->
                                 <div>
-                                    <button @click="openDelete = post.post_id" class="py-2 px-4 rounded text-white bg-red-500">
+                                    <button @click="openDelete = post.post_id"
+                                            class="py-2 px-4 rounded text-white bg-red-500">
                                         <?= $escaper->escapeHtml(__('Delete:')) ?>
                                     </button>
-                                    <div x-show="openDelete === post.post_id" class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
-                                        <form @submit.prevent="deletePost(post.post_id)" class="bg-white rounded shadow-sm w-1/4 mx-auto p-4 mt-12">
+                                    <div x-show="openDelete === post.post_id"
+                                         class="fixed w-screen h-screen left-0 top-0  bg-gray-200 bg-opacity-95 min-h-screen align-center min-w-screen py-32">
+                                        <form @submit.prevent="deletePost(post.post_id)"
+                                              class="bg-white rounded shadow-sm w-1/4 mx-auto p-4 mt-12">
                                             <div class="px-4 py-2">
                                                 <span class="block font-semibold p-8 mb-6 text-center text-lg">
                                                     <?= $escaper->escapeHtml(__('Xác nhận muốn xóa Post?')) ?>
                                                 </span>
                                             </div>
                                             <div class="flex px-4 py-2 justify-evenly">
-                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary" @click="openDelete = false">
+                                                <button type="submit" class="py-2 px-4 rounded text-white bg-primary"
+                                                        @click="openDelete = false">
                                                     <?= $escaper->escapeHtml(__('Delete Post')) ?>
                                                 </button>
-                                                <button class="py-2 px-4 rounded text-white bg-red-500" @click="openDelete = false">
+                                                <button class="py-2 px-4 rounded text-white bg-red-500"
+                                                        @click="openDelete = false">
                                                     <?= $escaper->escapeHtml(__('Cancel')) ?>
                                                 </button>
                                             </div>
@@ -229,16 +246,16 @@
             searchValue: '',
             posts: null,
             isLoading: true,
-            formUpdate:{
-                post_id:"",
-                title:"",
-                content:"",
+            formUpdate: {
+                post_id: "",
+                title: "",
+                content: "",
             },
             formData: {
-                title:"",
-                content:"",
+                title: "",
+                content: "",
             },
-            message:"",
+            message: "",
             customerToken: false,
             onPrivateContentLoaded(data) {
                 this.customerToken = data.customer['signin_token'];
@@ -252,11 +269,11 @@
             getPost() {
                 this.isLoading = true;
                 let getUrl;
-                if(this.searchValue == ""){
-                    getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]='+this.pageSize+'&searchCriteria[currentPage]='+this.currentPage;
-                } else{
-                    getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]='+this.pageSize+'&searchCriteria[currentPage]='+this.currentPage +
-                        '&searchCriteria[filter_groups][0][filters][0][field]=title&searchCriteria[filter_groups][0][filters][0][value]='+this.searchValue;
+                if (this.searchValue == "") {
+                    getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]=' + this.pageSize + '&searchCriteria[currentPage]=' + this.currentPage;
+                } else {
+                    getUrl = BASE_URL + 'rest/V1/bss/training/posts/get/?searchCriteria[pageSize]=' + this.pageSize + '&searchCriteria[currentPage]=' + this.currentPage +
+                        '&searchCriteria[filter_groups][0][filters][0][field]=title&searchCriteria[filter_groups][0][filters][0][value]=' + this.searchValue;
                 }
                 fetch(getUrl)
                     .then((res) => res.json())
@@ -267,10 +284,11 @@
                     });
             },
             submitPost() {
-                if(!this.formData.title.length){
+                if (!this.formData.title.length) {
                     this.message = "Title is required!";
                     return;
-                };
+                }
+                ;
                 const addUrl = BASE_URL + 'rest/V1/bss/training/posts';
                 fetch(addUrl, {
                     method: "POST",
@@ -280,26 +298,26 @@
                     },
                     body: JSON.stringify({post: this.formData}),
                 })
-                    .then( res =>{
+                    .then(res => {
                         this.formData.title = "";
                         this.formData.content = "";
-                        this.message ="";
+                        this.message = "";
                         this.getPost();
                     })
             },
-            editPost(index){
+            editPost(index) {
                 this.formUpdate = this.posts[index];
                 const editUrl = BASE_URL + 'rest/V1/bss/training/posts/';
-                fetch(editUrl , {
+                fetch(editUrl, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
                     },
-                    body: JSON.stringify({post:this.formUpdate}),
+                    body: JSON.stringify({post: this.formUpdate}),
                 })
             },
-            deletePost(post_id){
+            deletePost(post_id) {
                 let deleteUrl = BASE_URL + 'rest/V1/bss/training/posts/' + post_id;
                 fetch(deleteUrl, {
                     method: "DELETE",
@@ -327,7 +345,7 @@
             },
 
             //Total number of pages
-            pageCount(){
+            pageCount() {
                 return Math.ceil(this.total / this.pageSize);
                 this.getPost();
             },
@@ -336,44 +354,10 @@
                 this.currentPage = index;
                 this.getPost();
             },
-            changePageSize(){
+            changePageSize() {
                 this.pages();
                 this.getPost();
             },
         };
     }
 </script>
-
-<!--<script>-->
-<!--    const addUrl = BASE_URL + 'rest/V1/bss/training/posts';-->
-<!--    function addPost() {-->
-<!--        return {-->
-<!--            openAddPost: false,-->
-<!--            formData: {-->
-<!--                title:"",-->
-<!--                content:"",-->
-<!--            },-->
-<!--            message:"",-->
-<!--            submitPost() {-->
-<!--                if(!this.formData.title.length){-->
-<!--                    this.message = "Title is required!";-->
-<!--                    return;-->
-<!--                };-->
-<!--                const addUrl = BASE_URL + 'rest/V1/bss/training/posts';-->
-<!--                fetch(addUrl, {-->
-<!--                    method: "POST",-->
-<!--                    headers: {-->
-<!--                        "Content-Type": "application/json",-->
-<!--                        Accept: "application/json",-->
-<!--                    },-->
-<!--                    body: JSON.stringify({post: this.formData}),-->
-<!--                })-->
-<!--                    .then( res =>{-->
-<!--                        this.formData.title = "";-->
-<!--                        this.formData.content = "";-->
-<!--                        this.message ="";-->
-<!--                    })-->
-<!--            }-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->

@@ -62,6 +62,7 @@ class Post extends AbstractModel implements PostInterface
     {
         return $this->setData(self::TITLE, $title);
     }
+
     /**
      * @inheritDoc
      */
@@ -77,6 +78,7 @@ class Post extends AbstractModel implements PostInterface
     {
         return $this->setData(self::CREATED_AT, $created);
     }
+
     /**
      * @inheritDoc
      */

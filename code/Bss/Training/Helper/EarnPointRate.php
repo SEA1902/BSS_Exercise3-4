@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 namespace Bss\Training\Helper;
+
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 
@@ -14,19 +20,27 @@ class EarnPointRate extends AbstractHelper
     protected $scopeConfig;
 
     /**
+     * Core
+     *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-    )
-    {
+    ) {
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function getData() {
+    /**
+     * Get data
+     *
+     * @return mixed
+     */
+    public function getData()
+    {
         return $this->scopeConfig->getValue(
             "general/earn_point_rate/rate",
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null
+            ScopeInterface::SCOPE_STORE,
+            null
         );
     }
 }
